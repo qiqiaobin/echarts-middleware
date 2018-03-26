@@ -28,7 +28,7 @@ npm install -save echarts-middleware
 ```
 <template>
   <div class="my-chart">
-    <Chart :opt="data" :w="400" :h="400"></Chart>
+    <Chart :opt="mock" :w="400" :h="400"></Chart>
   </div>
 </template>
 
@@ -40,7 +40,7 @@ npm install -save echarts-middleware
     },
     data () {
       return {
-        data: {
+        mock: {
           'series': [{
             'name': 'gauge',
             'type': 'gauge',
