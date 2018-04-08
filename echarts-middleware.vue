@@ -24,6 +24,7 @@
     },
     mounted () {
       const opt    = this.opt
+      const parent = this.$el.parentNode
       let   width  = this.w,
             height = this.h
       if (!echarts) {
@@ -45,9 +46,9 @@
       }
       // 注册echarts
       if (opt) {
+        const renderer = this.renderer
         let chart = null
         setTimeout(() => {
-          const renderer = this.renderer
           chart = echarts.init(this.$el, this.theme, {width, height, renderer})
           // 绘制图表
           chart.setOption(opt)
