@@ -1,5 +1,7 @@
 # echarts-middleware
-在vue中优雅，高效的使用echarts,不断完善中
+在vue中优雅，高效的使用echarts
+
+2018年5月10日更新 可以自动检测高度变化并改变图标大小
 
 ## 快速上手
 
@@ -28,7 +30,7 @@ npm install -save echarts-middleware
 ```
 <template>
   <div class="my-chart">
-    <Chart :opt="data" :w="400" :h="400"></Chart>
+    <Chart :opt="data" :size="{w: 400, h: 400}"></Chart>
   <div>
 </template>
 
@@ -140,15 +142,14 @@ npm install -save echarts-middleware
 | 参数        | 含义         | 类型  | 是否必须  |
 | ----------- |:-------------:| -----:| -----:|
 |opt| 图表的配置 | Object | true |
-|w| 图表的宽度| Number | false |
-|h| 图表的高度| Number | false |
+|size| 图表的宽高| Object | false |
 |theme| 主题| String, Object | false |
 |renderer| 渲染器| String | false |
 
 使用实例：
 
 ```
-<Chart :opt="data" :w="400" :h="400"></Chart>
+<Chart :opt="data" :size="{w: 400, h: 400}"></Chart>
 ```
 
 注:如果 w h 参数没有设置，组件会以父组件宽高作为组件宽高， 如果父组件没有宽高则会以400px作为宽高。
@@ -161,7 +162,7 @@ npm install -save echarts-middleware
 ```
 <template>
   <div>
-    <Chart ref="mychart" :opt="data" :w="400" :h="400"></Chart>
+    <Chart ref="mychart" :opt="data" :size="{w: 400, h: 400}"></Chart>
     <button @click="click">销毁图表</button>
   </div>
 </template>
@@ -198,7 +199,7 @@ npm install -save echarts-middleware
 ```
 <template>
   <div>
-    <Chart v-model="chart" :opt="data" ref="mychart" :w="400" :h="400"></Chart>
+    <Chart v-model="chart" :opt="data" ref="mychart" :size="{w: 400, h: 400}"></Chart>
     <button @click="click">销毁图表</button>
   </div>
 </template>
@@ -237,18 +238,52 @@ npm install -save echarts-middleware
 
 举例:使用`this.$refs[ref名][0].chart.dispose()` 销毁图表
 
-<<<<<<< HEAD
-## 常见问题
-1. 图表不刷新？ 解决办法： 使用 :key
+## 示例代码
 
-2.错误问题: __DEV__ is not defined
-  解决方法:
-  ```
-  在 webpack的配置里面加一个配置
+* 创建一个图表并且修改它的大小
+```
+// 测试页面
+<template>
+  <div id="app2">
+    <Chart :opt="mock" :size="size" theme="infographic"></Chart>
+    <button @click="size.h = 500">改变</button>
+  </div>
+</template>
 
-  plugins: [
-    new webpack.DefinePlugin({
-      __DEV__: false
-    })
-  ]
-  ```
+<script>
+import Chart from 'echarts-middleware'
+
+export default {
+  data () {
+    return {
+      mock: {
+        'series': [{
+          'name': 'gauge',
+          'type': 'gauge',
+          'detail': {'formatter': '{value}'},
+          'data': [{'value': 34}]
+        }]
+      },
+      size: {
+        h: 400,
+        w: 400
+      },
+      height: 400
+    }
+  },
+  components: {
+    Chart
+  },
+  mounted () {
+    // console.log(Ruler)
+  }
+}
+</script>
+
+<style lang='less' scoped>
+  #app2 {
+    width: 1200px;
+    height: 800px;
+  }
+</style>
+```

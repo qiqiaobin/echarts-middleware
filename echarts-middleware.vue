@@ -9,8 +9,7 @@
     props: {
       value: null,
       opt: Object,
-      h: Number,
-      w: Number,
+      size: Object,
       theme: [String, Object],
       renderer: {
         type: String,
@@ -24,8 +23,8 @@
     },
     mounted () {
       const opt    = this.opt
-      let   width  = this.w,
-            height = this.h
+      let   width  = this.size.w,
+            height = this.size.h
       if (!echarts) {
         console.error('本组件需要配合echarts组件使用,请运行npm i -save echarts安装!')
         return null
@@ -57,6 +56,18 @@
             this.$emit('input', chart)
           }
         }, 0)
+      }
+    },
+    watch: {
+      size: {
+        handler: function (val, oldVal) {
+          // 如果高度配置发生改变，更改图表大小
+          this.chart.resize({
+            width: val.w,
+            height: val.h
+          })
+        },
+        deep: true
       }
     },
     beforeDestroy () {
