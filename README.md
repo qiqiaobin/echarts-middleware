@@ -16,7 +16,7 @@ npm install -save echarts-middleware
 
 ```
 <script>
-  import echarts from 'echarts'
+  import 'echarts'
   import Chart from 'echarts-middleware'
   export default {
     components: {
@@ -42,7 +42,7 @@ npm install -save echarts-middleware
     },
     data () {
       return {
-        data: {
+        mock: {
           'series': [{
             'name': 'gauge',
             'type': 'gauge',
@@ -238,6 +238,7 @@ npm install -save echarts-middleware
 
 举例:使用`this.$refs[ref名][0].chart.dispose()` 销毁图表
 
+<<<<<<< HEAD
 ## 示例代码
 
 * 创建一个图表并且修改它的大小
@@ -287,3 +288,20 @@ export default {
   }
 </style>
 ```
+=======
+<<<<<<< HEAD
+## 常见问题
+1. 图表不刷新？ 解决办法： 使用 :key
+
+2.错误问题: __DEV__ is not defined
+  解决方法:
+  ```
+  在 webpack的配置里面加一个配置
+
+  plugins: [
+    new webpack.DefinePlugin({
+      __DEV__: false
+    })
+  ]
+  ```
+>>>>>>> a6e574b994465c6cd807df511b2cae3b9e553391
