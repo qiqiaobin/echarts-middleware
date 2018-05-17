@@ -22,9 +22,8 @@
       }
     },
     mounted () {
-      const opt    = this.opt
-      let   width  = this.size.w,
-            height = this.size.h
+      const opt = this.opt
+      let width, height
       if (!echarts) {
         console.error('本组件需要配合echarts组件使用,请运行npm i -save echarts安装!')
         return null
@@ -32,6 +31,10 @@
       // 判断用户是否指定了组件的 宽 和 高，如果指定了，那么使用用户指定的值
       // 如果没有指定则使用 父组件 宽高
       // 如果出错 使用400px默认宽高
+      if (this.size && this.size.w && this.size.h) {
+        width = this.size.w
+        height = this.size.h
+      }
       if (!width && !height) {
         const parent = this.$el.parentNode
         if (parent && parent.clientWidth && parent.clientHeight) {
@@ -44,9 +47,9 @@
       }
       // 注册echarts
       if (opt) {
-        const renderer = this.renderer
         let chart = null
         setTimeout(() => {
+          const renderer = this.renderer
           chart = echarts.init(this.$el, this.theme, {width, height, renderer})
           // 绘制图表
           chart.setOption(opt)
