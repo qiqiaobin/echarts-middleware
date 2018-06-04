@@ -64,6 +64,9 @@
     watch: {
       size: {
         handler: function (val, oldVal) {
+          // 避免不正常调用导致报错
+          if (!this.chart) return
+          if (val === undefined || val === null) return
           // 如果高度配置发生改变，更改图表大小
           this.chart.resize({
             width: val.w,
