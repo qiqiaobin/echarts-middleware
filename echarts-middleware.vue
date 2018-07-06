@@ -72,7 +72,15 @@
       },
       value: {
         handler: function (val, oldVal) {
-          this.chart.setOption(val)
+          // 组件刚刚没创建时value会发生修改，但是这时Echarts实例还没有生成
+          if (!this.chart) return
+          // 判断传入的格式是否正确,如果不正确或者为空则销毁图表
+          if (val !== null && typeof val === 'object') {
+            this.chart.setOption(val) 
+          } else {
+            console.info('没有传入配置项或者配置项不正确!')
+            this.chart.clear()
+          }
         },
         deep: true
       }
