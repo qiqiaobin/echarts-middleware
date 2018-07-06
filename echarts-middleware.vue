@@ -8,7 +8,6 @@
   export default {
     props: {
       value: null,
-      opt: Object,
       size: Object,
       theme: [String, Object],
       renderer: {
@@ -22,7 +21,7 @@
       }
     },
     mounted () {
-      const opt = this.opt
+      const value = this.value
       let width, height
       if (!echarts) {
         console.error('本组件需要配合echarts组件使用,请运行npm i -save echarts安装!')
@@ -46,18 +45,14 @@
         }
       }
       // 注册echarts
-      if (opt) {
-        let chart = null
+      if (this.value) {
         setTimeout(() => {
           const renderer = this.renderer
-          chart = echarts.init(this.$el, this.theme, {width, height, renderer})
+          this.chart = echarts.init(this.$el, this.theme, {width, height, renderer})
           // 绘制图表
-          chart.setOption(opt)
-          this.chart = chart
-          // 判断是否绑定v-model，如果绑定了就将值传给v-model
-          if (this.value !== undefined) {
-            this.$emit('input', chart)
-          }
+          this.chart.setOption(this.value)
+          // 将chart对象暴露给父组件
+          this.$emit('init', this.chart)
         }, 0)
       }
     },
@@ -72,6 +67,12 @@
             width: val.w,
             height: val.h
           })
+        },
+        deep: true
+      },
+      value: {
+        handler: function (val, oldVal) {
+          this.chart.setOption(val)
         },
         deep: true
       }
