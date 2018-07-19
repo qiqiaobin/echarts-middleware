@@ -22,6 +22,10 @@
     },
     mounted () {
       const value = this.value
+      if (!value) {
+        console.error('没有绑定图表数据!')
+        return
+      }
       let width, height
       if (!echarts) {
         console.error('本组件需要配合echarts组件使用,请运行npm i -save echarts安装!')
