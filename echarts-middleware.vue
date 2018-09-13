@@ -59,7 +59,7 @@
           const renderer = this.renderer
           this.chart = echarts.init(this.$el, this.theme, {width, height, renderer})
           // 绘制图表
-          this.chart.setOption(this.value, this.notMerge)
+          this.chart.setOption(this.value)
           // 将chart对象暴露给父组件
           this.$emit('init', this.chart)
         }, 0)
@@ -85,7 +85,7 @@
           if (!this.chart) return
           // 判断传入的格式是否正确,如果不正确或者为空则销毁图表
           if (val !== null && typeof val === 'object') {
-            this.chart.setOption(val) 
+            this.chart.setOption(val, this.notMerge) 
           } else {
             console.info('没有传入配置项或者配置项不正确!')
             this.chart.clear()
