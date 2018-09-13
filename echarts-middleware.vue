@@ -13,6 +13,11 @@
       renderer: {
         type: String,
         default: 'canvas'
+      },
+      // 是否不跟之前设置的option进行合并
+      notMerge: {
+        type: Boolean,
+        default: true
       }
     },
     data () {
@@ -50,7 +55,7 @@
           const renderer = this.renderer
           this.chart = echarts.init(this.$el, this.theme, {width, height, renderer})
           // 绘制图表
-          this.chart.setOption(this.value)
+          this.chart.setOption(this.value, this.notMerge)
           // 将chart对象暴露给父组件
           this.$emit('init', this.chart)
         }, 0)
