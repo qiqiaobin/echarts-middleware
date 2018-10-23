@@ -79,8 +79,10 @@
         },
         deep: true
       },
+      // 对于某些情况下的数据改变即使使用了deep: true也无法监测到
       value: {
         handler: function (val, oldVal) {
+          // console.log('数据发生改变!')
           // 组件刚刚没创建时value会发生修改，但是这时Echarts实例还没有生成
           if (!this.chart) return
           // 判断传入的格式是否正确,如果不正确或者为空则销毁图表
